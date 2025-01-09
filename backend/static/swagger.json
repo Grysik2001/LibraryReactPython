@@ -1,0 +1,265 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "description": "API for managing books in the PrzyjaznaBibliotekaProjekt application.",
+    "version": "1.0.0",
+    "title": "PrzyjaznaBibliotekaProjekt",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000",
+      "description": "Local development server"
+    },
+    {
+      "url": "https://library-react-python.onrender.com",
+      "description": "Production server"
+    }
+  ],
+  "paths": {
+    "/api/books": {
+      "get": {
+        "tags": ["Books"],
+        "summary": "Retrieve all books",
+        "responses": {
+          "200": {
+            "description": "List of all books",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Book"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Books"],
+        "summary": "Create a new book",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Book created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Book"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/books/{id}": {
+      "delete": {
+        "tags": ["Books"],
+        "summary": "Delete a book by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the book to delete",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Book deleted successfully"
+          },
+          "404": {
+            "description": "Book not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Books"],
+        "summary": "Update a book by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the book to update",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Book updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Book"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Book not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Book": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "title": {
+            "type": "string",
+            "example": "Sample Book Title"
+          },
+          "author": {
+            "type": "string",
+            "example": "John Doe"
+          },
+          "description": {
+            "type": "string",
+            "example": "A brief description of the book."
+          },
+          "owner": {
+            "type": "string",
+            "example": "Library Owner Name"
+          },
+          "img": {
+            "type": "string",
+            "example": "http://example.com/image.jpg"
+          },
+          "name_borrow": {
+            "type": "string",
+            "example": "Jane"
+          },
+          "surname_borrow": {
+            "type": "string",
+            "example": "Doe"
+          },
+          "email_borrow": {
+            "type": "string",
+            "example": "jane.doe@example.com"
+          },
+          "isBorrow": {
+            "type": "boolean",
+            "example": false
+          }
+        }
+      },
+      "BookCreate": {
+        "type": "object",
+        "required": ["title", "author", "description", "owner", "img"],
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "author": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "img": {
+            "type": "string"
+          },
+          "name_borrow": {
+            "type": "string"
+          },
+          "surname_borrow": {
+            "type": "string"
+          },
+          "email_borrow": {
+            "type": "string"
+          },
+          "isBorrow": {
+            "type": "boolean"
+          }
+        }
+      },
+      "BookUpdate": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "author": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "img": {
+            "type": "string"
+          },
+          "name_borrow": {
+            "type": "string"
+          },
+          "surname_borrow": {
+            "type": "string"
+          },
+          "email_borrow": {
+            "type": "string"
+          },
+          "isBorrow": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
+}
